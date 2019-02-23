@@ -22,6 +22,7 @@ allprojects {
       compile(assertK())
       testCompile(junit())
     }
+
     bom = "io.mverse:mverse-bom:0.5.13"
     coverageRequirement = 0.39
   }

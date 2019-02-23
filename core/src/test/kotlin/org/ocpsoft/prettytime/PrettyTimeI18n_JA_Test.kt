@@ -24,8 +24,6 @@ class PrettyTimeI18n_JA_Test {
     Locale.setDefault(locale)
   }
 
-  @Test
-
   fun testNullDate() {
     val t = PrettyTime(locale)
     val date: Date? = null

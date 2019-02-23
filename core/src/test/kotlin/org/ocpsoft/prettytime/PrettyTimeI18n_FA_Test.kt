@@ -50,8 +50,6 @@ class PrettyTimeI18n_FA_Test {
     assertEquals("1 ماه پیش", t.format(then))
   }
 
-  @Test
-
   fun testNullDate() {
     val t = PrettyTime()
     val date: Date? = null

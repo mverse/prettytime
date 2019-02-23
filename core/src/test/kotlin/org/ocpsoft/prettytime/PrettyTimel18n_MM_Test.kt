@@ -31,8 +31,6 @@ class PrettyTimel18n_MM_Test {
     Locale.setDefault(locale!!)
   }
 
-  @Test
-
   fun testNullDate() {
     val t = PrettyTime()
     val date: Date? = null

@@ -63,8 +63,6 @@ class PrettyTimeI18n_uk_Test {
     assertEquals("1 місяць тому", t.format(then))
   }
 
-  @Test
-
   fun testNullDate() {
     val t = PrettyTime(locale)
     val date: Date? = null

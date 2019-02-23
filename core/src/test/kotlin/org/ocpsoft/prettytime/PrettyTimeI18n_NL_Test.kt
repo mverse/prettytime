@@ -61,8 +61,6 @@ class PrettyTimeI18n_NL_Test {
     assertEquals("1 maand geleden", t.format(then))
   }
 
-  @Test
-
   fun testNullDate() {
     val t = PrettyTime(locale)
     val date: Date? = null

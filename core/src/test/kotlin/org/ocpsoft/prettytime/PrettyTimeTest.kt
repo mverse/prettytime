@@ -55,8 +55,6 @@ class PrettyTimeTest {
     Assert.assertEquals("1 month ago", t.format(then))
   }
 
-  @Test
-
   fun testNullDate() {
     val t = PrettyTime()
     val date: Date? = null

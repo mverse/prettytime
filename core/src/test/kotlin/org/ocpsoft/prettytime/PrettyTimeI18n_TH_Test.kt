@@ -34,8 +34,6 @@ class PrettyTimeI18n_TH_Test {
     assertEquals("ชั่วขณะต่อจากนี้้ี้้", prettyTime.format(Date()))
   }
 
-  @Test
-
   fun testNullDate() {
     val t = PrettyTime()
     val date: Date? = null

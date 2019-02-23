@@ -48,8 +48,6 @@ class PrettyTimeI18n_uy_Test {
     assertEquals("1 ئاي ئىلگىرى", t.format(then))
   }
 
-  @Test
-
   fun testNullDate() {
     val t = PrettyTime(locale)
     val date: Date? = null

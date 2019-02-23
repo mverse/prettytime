@@ -48,8 +48,6 @@ class PrettyTimeI18n_MS_Test {
     assertEquals("1 bulan yang lalu", t.format(then))
   }
 
-  @Test
-
   fun testNullDate() {
     val t = PrettyTime(locale)
     val date: Date? = null

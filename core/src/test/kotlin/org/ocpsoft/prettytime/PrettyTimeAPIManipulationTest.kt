@@ -35,16 +35,7 @@ class PrettyTimeAPIManipulationTest {
     Assert.assertNotNull(t.locale)
   }
 
-  @Test
 
-  fun testApiMisuse11() {
-    t.reference
-  }
-
-  @Test
-  fun testApiMisuse12() {
-    t.unitKeys
-  }
 
   @Test
   fun testApiMisuse15() {

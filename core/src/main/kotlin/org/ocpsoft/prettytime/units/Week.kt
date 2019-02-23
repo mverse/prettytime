@@ -18,7 +18,7 @@ package org.ocpsoft.prettytime.units
 import org.ocpsoft.prettytime.TimeUnit
 import org.ocpsoft.prettytime.impl.ResourcesTimeUnit
 
-object Week : ResourcesTimeUnit(), TimeUnit {
+class Week : ResourcesTimeUnit(), TimeUnit {
    override val resourceKeyPrefix: String get() = "Week"
 
   init {

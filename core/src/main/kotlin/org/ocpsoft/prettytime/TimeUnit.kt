@@ -51,8 +51,4 @@ interface TimeUnit {
    * "minute" as opposed to "moment".
    */
   val isPrecise: Boolean
-
-  companion object {
-    val DefaultTimeUnit:TimeUnit = Second
-  }
 }

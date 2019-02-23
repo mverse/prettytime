@@ -18,7 +18,7 @@ package org.ocpsoft.prettytime.units
 import org.ocpsoft.prettytime.TimeUnit
 import org.ocpsoft.prettytime.impl.ResourcesTimeUnit
 
-object Second : ResourcesTimeUnit(), TimeUnit {
+class Second : ResourcesTimeUnit(), TimeUnit {
    override val resourceKeyPrefix: String get() = "Second"
 
   init {

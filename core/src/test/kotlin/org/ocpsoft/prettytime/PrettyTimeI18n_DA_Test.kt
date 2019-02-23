@@ -15,10 +15,15 @@
  */
 package org.ocpsoft.prettytime
 
+import org.junit.AfterClass
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.Duration.*
+import java.time.Instant
 import java.util.*
 
 /**
@@ -56,17 +61,12 @@ class PrettyTimeI18n_DA_Test {
     assertEquals("1 måned siden", t.format(then))
   }
 
-  @Test
-  fun testNullDate() {
-    val t = PrettyTime(locale)
-    val date: Date? = null
-    assertEquals("straks", t.format(date))
-  }
 
   @Test
   fun testRightNow() {
-    val t = PrettyTime(locale)
-    assertEquals("straks", t.format(Date()))
+    val now = Instant.now()
+    val t = PrettyTime(locale = locale, reference = now)
+    assertEquals("straks", t.format(now + ofMillis(600)))
   }
 
   @Test
@@ -178,5 +178,11 @@ class PrettyTimeI18n_DA_Test {
   fun testCenturiesAgo() {
     val t = PrettyTime(Date(3155692597470L * 3L), locale)
     assertEquals("3 århundreder siden", t.format(Date(0)))
+  }
+
+  companion object {
+    @BeforeClass @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }

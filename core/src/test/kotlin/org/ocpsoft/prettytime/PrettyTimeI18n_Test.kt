@@ -15,15 +15,14 @@
  */
 package org.ocpsoft.prettytime
 
+import org.junit.AfterClass
 import org.junit.Assert.assertEquals
-
-import java.util.Date
-import java.util.Locale
-
-import org.junit.After
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
-import org.ocpsoft.prettytime.PrettyTime
+import java.time.Duration.ofSeconds
+import java.time.Instant
+import java.util.*
 
 /**
  * All the tests for PrettyTime.
@@ -38,13 +37,10 @@ class PrettyTimeI18n_Test {
     * -agentlib:yjpagent=onexit=snapshot,tracing
     */
 
-  // Stores current locale so that it can be restored
-  private lateinit var locale: Locale
 
   // Method setUp() is called automatically before every test method
   @Before
   fun setUp() {
-    locale = Locale.getDefault()
     Locale.setDefault(Locale.ROOT)
   }
 
@@ -66,8 +62,9 @@ class PrettyTimeI18n_Test {
   @Test
   fun testPrettyTimeSpanish() {
     // The Spanish resource bundle should be used
-    val p = PrettyTime(defaultLocale = Locale("es"))
-    assertEquals("hace un instante", p.format(Date()))
+    val now = Instant.now()
+    val p = PrettyTime(locale = Locale("es"), reference = now)
+    assertEquals("en un instante", p.format(now.plusMillis(1000)))
   }
 
   @Test
@@ -136,8 +133,9 @@ class PrettyTimeI18n_Test {
     }
   }
 
-  // Method tearDown() is called automatically after every test method
-  @After fun tearDown() {
-    Locale.setDefault(locale)
+  companion object {
+    @BeforeClass @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }

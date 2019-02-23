@@ -12,15 +12,22 @@ plugins {
 
 allprojects {
   plugins.apply("java")
+  group = "io.mverse"
   mverse {
+    isDefaultDependencies = false
     dependencies {
       compile(kotlinStdlib())
       compile(kotlinTest())
       compile(kotlinImmutable())
       compile(assertK())
+      testCompile(junit())
     }
     bom = "io.mverse:mverse-bom:0.5.13"
     coverageRequirement = 0.39
+  }
+
+  tasks.withType(Test::class) {
+    systemProperty("user.timezone", "America/New_York")
   }
 
   tasks.withType<KotlinCompile> {
@@ -44,7 +51,9 @@ allprojects {
         entry("assertk-jvm")
         entry("assertk-common")
       }
-      dependency("com.joestelmach:natty:0.11")
+      dependency("com.joestelmach:natty:0.10.1") {
+        this.exclude("org.antlr:antlr")
+      }
       dependency("io.mverse:hashkode:1.0.1")
     }
   }

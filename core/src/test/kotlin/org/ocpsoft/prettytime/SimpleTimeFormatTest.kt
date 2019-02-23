@@ -15,9 +15,10 @@
  */
 package org.ocpsoft.prettytime
 
-import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.ocpsoft.prettytime.format.SimpleTimeFormat
 import java.time.Duration.ofSeconds
@@ -32,7 +33,7 @@ class SimpleTimeFormatTest {
   // Method setUp() is called automatically before every test method
   @Before fun setUp() {
     locale = Locale.getDefault()
-    Locale.setDefault(Locale.ROOT)
+    Locale.setDefault(Locale.ENGLISH)
   }
 
   @Test
@@ -44,21 +45,26 @@ class SimpleTimeFormatTest {
     assertEquals("3 hours ago", t.formatUnrounded(duration))
   }
 
-  @Test
-
-  fun testDecorating() {
+  @Test fun testDecoratingFuture() {
     val t = PrettyTime()
-    val format = SimpleTimeFormat().setFuturePrefix("from now").setPastSuffix("ago")
+    val format = SimpleTimeFormat().setFutureSuffix("from now")
 
-    var duration = t.approximateDuration(Instant.now() - ofSeconds(1000))
+    val duration = t.approximateDuration(Instant.now() + ofSeconds(1000))
     assertEquals("some time from now", format.decorate(duration, "some time"))
+  }
 
-    duration = t.approximateDuration(Instant.now() + ofSeconds(10000))
+  @Test fun testDecoratingPast() {
+    val t = PrettyTime()
+    val format = SimpleTimeFormat().setPastSuffix("ago")
+    val duration = t.approximateDuration(Instant.now() - ofSeconds(1000))
     assertEquals("some time ago", format.decorate(duration, "some time"))
   }
 
-  // Method tearDown() is called automatically after every test method
-  @After fun tearDown() {
-    Locale.setDefault(locale)
+  companion object {
+    // Method setUp() is called automatically before every test method
+    @BeforeClass @AfterClass fun setUp() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
+
 }

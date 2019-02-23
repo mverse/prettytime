@@ -190,8 +190,8 @@ class Resources_cs : ListResourceBundle(), TimeFormatProvider {
       return threshold!!
     }
 
-    override fun compareTo(o: CsName): Int {
-      return threshold!!.compareTo(o.getThreshold())
+    override fun compareTo(other: CsName): Int {
+      return threshold!!.compareTo(other.getThreshold())
     }
   }
 

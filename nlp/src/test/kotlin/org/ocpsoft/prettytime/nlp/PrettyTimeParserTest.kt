@@ -1,14 +1,12 @@
 package org.ocpsoft.prettytime.nlp
 
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
-
 import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.ocpsoft.prettytime.PrettyTime
 import org.ocpsoft.prettytime.nlp.parse.DateGroup
+import java.time.Instant
+import java.util.*
 
 class PrettyTimeParserTest {
 
@@ -47,7 +45,7 @@ class PrettyTimeParserTest {
   fun testParseSyntax() {
     val parse = PrettyTimeParser().parseSyntax("I did it three days ago")
     Assert.assertFalse(parse.isEmpty())
-    val formatted = PrettyTime(defaultLocale = Locale.ENGLISH).format(parse[0].dates[0].toInstant())
+    val formatted = PrettyTime(reference = Instant.now(), locale = Locale.ENGLISH).format(parse[0].dates[0].toInstant())
     Assert.assertEquals("3 days ago", formatted)
     Assert.assertEquals(1, parse[0].line.toLong())
     Assert.assertEquals(9, parse[0].position.toLong())

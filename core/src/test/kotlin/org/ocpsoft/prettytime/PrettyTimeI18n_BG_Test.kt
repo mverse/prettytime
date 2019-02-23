@@ -7,6 +7,7 @@ import java.util.Date
 import java.util.Locale
 
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Before
 import org.junit.Test
 
@@ -14,20 +15,11 @@ class PrettyTimeI18n_BG_Test {
 
   internal var format = SimpleDateFormat("dd/MM/yyyy")
 
-  // Stores current locale so that it can be restored
-  private var locale: Locale? = null
-
-  // Method setUp() is called automatically before every test method
-  @Before
-
-  fun setUp() {
-    locale = Locale.getDefault()
+  @Before fun setUp() {
     Locale.setDefault(Locale("bg"))
   }
 
-  @Test
-
-  fun testCenturiesFromNow() {
+  @Test fun testCenturiesFromNow() {
     val t = PrettyTime(Date(0))
     assertEquals("след 3 века", t.format(Date(3155692597470L * 3L)))
   }
@@ -217,10 +209,9 @@ class PrettyTimeI18n_BG_Test {
     assertEquals("след 3 дни 15 часа 38 минути", t.format(durations))
   }
 
-  // Method tearDown() is called automatically after every test method
-  @After
-
-  fun tearDown() {
-    Locale.setDefault(locale!!)
+  companion object {
+    @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }

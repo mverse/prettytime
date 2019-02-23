@@ -18,7 +18,7 @@ package org.ocpsoft.prettytime.units
 import org.ocpsoft.prettytime.TimeUnit
 import org.ocpsoft.prettytime.impl.ResourcesTimeUnit
 
-object Century : ResourcesTimeUnit(), TimeUnit {
+class Century : ResourcesTimeUnit(), TimeUnit {
   override val resourceKeyPrefix = "Century"
 
   init {

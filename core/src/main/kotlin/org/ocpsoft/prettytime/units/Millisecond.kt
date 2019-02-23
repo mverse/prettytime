@@ -18,7 +18,7 @@ package org.ocpsoft.prettytime.units
 import org.ocpsoft.prettytime.TimeUnit
 import org.ocpsoft.prettytime.impl.ResourcesTimeUnit
 
-object Millisecond : ResourcesTimeUnit(), TimeUnit {
+class Millisecond : ResourcesTimeUnit(), TimeUnit {
 
   override val resourceKeyPrefix: String
     get() = "Millisecond"

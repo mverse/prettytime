@@ -3,10 +3,8 @@
  */
 package org.ocpsoft.prettytime
 
-import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.ocpsoft.prettytime.format.SimpleTimeFormat
 import org.ocpsoft.prettytime.units.Minute
@@ -24,23 +22,12 @@ class PrettyTimeI18n_HE_Test {
     Locale.setDefault(locale)
   }
 
-  @Test
-  fun testNullDate() {
-    val t = PrettyTime()
-    val date: Date? = null
-    Assert.assertEquals("עוד רגע", t.format(date))
-  }
-
-  @Test
-
-  fun testRightNow() {
+  @Test fun testRightNow() {
     val t = PrettyTime()
     Assert.assertEquals("עוד רגע", t.format(Date()))
   }
 
-  @Test
-
-  fun testCalculatePreciceDuration() {
+  @Test fun testCalculatePreciseDuration3() {
     val t = PrettyTime()
     val preciseDuration = t.calculatePreciseDuration(
         Date(System.currentTimeMillis() - (2 * 60 * 60 * 1000).toLong() - (2 * 60 * 1000).toLong()))
@@ -64,7 +51,7 @@ class PrettyTimeI18n_HE_Test {
   fun testCalculatePreciseDuration2() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("לפני 40 דקות", prettyTime.formatUnrounded(prettyTime.calculatePreciseDuration(
         Date(Date().time - (40 * 60 * 1000).toLong() - (40 * 1000).toLong()))))
@@ -334,7 +321,7 @@ class PrettyTimeI18n_HE_Test {
   fun testFormatList() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("לפני 41 דקות",
         prettyTime.format(prettyTime.calculatePreciseDuration(
@@ -346,7 +333,7 @@ class PrettyTimeI18n_HE_Test {
   fun testFormatListUnrounded() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("לפני 40 דקות",
         prettyTime.formatUnrounded(prettyTime.calculatePreciseDuration(
@@ -358,7 +345,7 @@ class PrettyTimeI18n_HE_Test {
   fun testFormatDurationList() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("41 דקות",
         prettyTime.formatDuration(prettyTime.calculatePreciseDuration(
@@ -370,7 +357,7 @@ class PrettyTimeI18n_HE_Test {
   fun testFormatDurationListUnrounded() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("40 דקות",
         prettyTime.formatDurationUnrounded(prettyTime.calculatePreciseDuration(
@@ -381,7 +368,7 @@ class PrettyTimeI18n_HE_Test {
   fun testCalculatePreciseDuration() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("לפני 41 דקות",
         prettyTime.format(prettyTime.calculatePreciseDuration(
@@ -392,7 +379,7 @@ class PrettyTimeI18n_HE_Test {
   fun testCalculatePreciseDurationUnrounded() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("לפני 40 דקות",
         prettyTime.formatUnrounded(prettyTime.calculatePreciseDuration(

@@ -26,6 +26,6 @@ class TimeUnitComparatorTest {
 
   @Test
   fun testComparingOrder() {
-    assertEquals(-1, TimeUnitComparator.compare(Hour, Day).toLong())
+    assertEquals(-1, TimeUnitComparator.compare(Hour(), Day()).toLong())
   }
 }

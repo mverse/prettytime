@@ -15,7 +15,7 @@
  */
 package org.ocpsoft.prettytime
 
-import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -253,17 +253,15 @@ class PrettyTimeI18n_CS_Test {
     return calendar.time
   }
 
-  private var locale: Locale? = null
-
   @Before
   fun setUp() {
-    locale = Locale.getDefault()
     Locale.setDefault(Locale("cs"))
   }
 
-  @After
-  fun tearDown() {
-    Locale.setDefault(locale!!)
+  companion object {
+    @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }
 

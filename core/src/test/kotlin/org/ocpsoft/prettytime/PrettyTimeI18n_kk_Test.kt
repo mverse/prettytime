@@ -1,6 +1,7 @@
 package org.ocpsoft.prettytime
 
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Before
 import org.junit.Test
 
@@ -9,17 +10,20 @@ import java.util.Date
 import java.util.Locale
 
 import org.junit.Assert.assertEquals
+import org.junit.BeforeClass
+import java.time.Duration.ofSeconds
+import java.time.Instant
 
 /**
  * Created by Azimkhan Yerzhan on 5/8/2017
  */
 class PrettyTimeI18n_kk_Test {
   private val format = SimpleDateFormat("dd/MM/yyyy")
-  private var locale: Locale? = null
+  private lateinit var locale: Locale
 
   @Before fun setUp() {
     locale = Locale("kk")
-    Locale.setDefault(locale!!)
+    Locale.setDefault(locale)
   }
 
   @Test
@@ -37,35 +41,22 @@ class PrettyTimeI18n_kk_Test {
     assertEquals("3 ғасырдан кейін", p.format(Date(3155692597470L * 3L)))
   }
 
-  @Test
-
-  fun testCeilingInterval() {
+  @Test fun testCeilingInterval() {
     val then = format.parse("20/5/2009")
     val ref = format.parse("17/6/2009")
     val t = PrettyTime(ref, locale)
     assertEquals("1 ай бұрын", t.format(then))
   }
 
-  @Test
-
-  fun testNullDate() {
+  @Test fun testRightNow() {
     val t = PrettyTime(locale)
-    val date: Date? = null
-    assertEquals("дәл қазір", t.format(date))
+    assertEquals("дәл қазір", t.format(Instant.now()))
   }
 
-  @Test
-
-  fun testRightNow() {
-    val t = PrettyTime(locale)
-    assertEquals("дәл қазір", t.format(Date()))
-  }
-
-  @Test
-
-  fun testRightNowVariance() {
-    val t = PrettyTime(Date(0), locale)
-    assertEquals("дәл қазір", t.format(Date(600)))
+  @Test fun testRightNowVariance() {
+    val now = Instant.now()
+    val t = PrettyTime(locale = locale, reference = now)
+    assertEquals("дәл қазір", t.format(now + ofSeconds(1)))
   }
 
   @Test
@@ -205,9 +196,10 @@ class PrettyTimeI18n_kk_Test {
     assertEquals("3 мыңжылдық бұрын", t.format(Date(0)))
   }
 
-  @After
-
-  fun tearDown() {
-    Locale.setDefault(locale!!)
+  companion object {
+    // Method setUp() is called automatically before every test method
+    @BeforeClass @AfterClass fun setUp() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }

@@ -15,57 +15,39 @@
  */
 package org.ocpsoft.prettytime
 
+import org.junit.AfterClass
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
-import org.junit.After
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.ocpsoft.prettytime.format.SimpleTimeFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PrettyTimeI18n_KO_Test {
   internal var format = SimpleDateFormat("MM/dd/yyyy")
 
   private var locale: Locale? = null
 
-  @Before
-
-  fun setUp() {
+  @Before fun setUp() {
     locale = Locale.getDefault()
     Locale.setDefault(Locale.KOREA)
   }
 
-  @Test
-
-  fun testCeilingInterval() {
+  @Test fun testCeilingInterval() {
     val then = format.parse("5/20/2009")
     val ref = format.parse("6/17/2009")
     val t = PrettyTime(ref, Locale.KOREA)
     assertEquals("1개월 전", t.format(then))
   }
 
-  @Test
-
-  fun testNullDate() {
-    val t = PrettyTime()
-    val date: Date? = null
-    assertEquals("지금", t.format(date))
-  }
-
-  @Test
-
-  fun testRightNow() {
+  @Test fun testRightNow() {
     val t = PrettyTime()
     assertEquals("지금", t.format(Date()))
   }
 
-  @Test
-
-  fun testRightNowVariance() {
+  @Test fun testRightNowVariance() {
     val t = PrettyTime(Date(0))
     assertEquals("지금", t.format(Date(600)))
   }
@@ -172,7 +154,6 @@ class PrettyTimeI18n_KO_Test {
   }
 
   @Test
-
   fun testCustomFormat() {
     val t = PrettyTime(Date(0))
     val unit = object : TimeUnit {
@@ -274,10 +255,10 @@ class PrettyTimeI18n_KO_Test {
     assertEquals("vor 3 Jahrzehnten", t.format(Date(0)))
   }
 
-  // Method tearDown() is called automatically after every test method
-  @After
-
-  fun tearDown() {
-    Locale.setDefault(locale!!)
+  companion object {
+    // Method setUp() is called automatically before every test method
+    @BeforeClass @AfterClass fun setUp() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }

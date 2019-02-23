@@ -16,6 +16,7 @@
 package org.ocpsoft.prettytime
 
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -255,6 +256,12 @@ class PrettyTimeI18n_AR_Test {
   @After
   fun tearDown() {
     Locale.setDefault(locale)
+  }
+
+  companion object {
+    @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }
 

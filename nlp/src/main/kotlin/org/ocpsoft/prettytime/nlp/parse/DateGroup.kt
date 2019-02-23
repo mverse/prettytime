@@ -1,5 +1,6 @@
 package org.ocpsoft.prettytime.nlp.parse
 
+import java.time.Instant
 import java.util.Date
 
 /**
@@ -21,7 +22,7 @@ interface DateGroup {
   /**
    * Get the [Date] to which this [DateGroup] recurs.
    */
-  val recursUntil: Date
+  val recursUntil: Instant?
 
   /**
    * Get the starting position of this [DateGroup] in the language text.

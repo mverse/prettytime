@@ -4,6 +4,7 @@ package org.ocpsoft.prettytime.nlp
 
 import com.joestelmach.natty.Parser
 import org.ocpsoft.prettytime.nlp.parse.DateGroup
+import java.time.Instant
 import java.util.*
 import com.joestelmach.natty.DateGroup as NattyDateGroup
 
@@ -126,7 +127,7 @@ class PrettyTimeParser(timezone: TimeZone) {
     override val dates: List<Date> = group.dates
     override val line: Int = group.line
     override val position: Int = group.position
-    override val recursUntil: Date = group.recursUntil
+    override val recursUntil: Instant? = group.recursUntil?.toInstant()
     override val text: String = group.text
     override val isRecurring: Boolean = group.isRecurring
 

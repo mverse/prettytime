@@ -17,9 +17,12 @@ package org.ocpsoft.prettytime
 
 import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assert
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.ocpsoft.prettytime.format.SimpleTimeFormat
 import org.ocpsoft.prettytime.units.Day
@@ -40,13 +43,11 @@ class PrettyTimeTest {
   @Before
 
   fun setUp() {
-    TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.systemDefault()))
     locale = Locale.getDefault()
-    Locale.setDefault(Locale.ROOT)
+    Locale.setDefault(Locale.ENGLISH)
   }
 
   @Test
-
   fun testCeilingInterval() {
     val then = format.parse("5/20/2009")
     val ref = format.parse("6/17/2009")
@@ -100,9 +101,9 @@ class PrettyTimeTest {
     val durations = t.calculatePreciseDuration(plusFiveHours)
     assertk.assertAll {
       assertk.assert(durations).hasSize(2)
-      assertk.assert(durations[0].unit).isEqualTo(Hour)
+      assertk.assert(durations[0].unit).isInstanceOf(Hour::class)
       assertk.assert(durations[0].quantity).isEqualTo(5L)
-      assertk.assert(durations[1].unit).isEqualTo(Minute)
+      assertk.assert(durations[1].unit).isInstanceOf(Minute::class)
       assertk.assert(durations[1].quantity).isEqualTo(10L)
     }
   }
@@ -114,16 +115,14 @@ class PrettyTimeTest {
 
     val t = PrettyTime(reference = now.toInstant())
     val durations = t.calculatePreciseDuration(plusFiveHours.toInstant())
+    assertk.assert(durations).hasSize(3)
     assertk.assertAll {
-      assertk.assert(durations).hasSize(4)
-      assertk.assert(durations[0].unit).isEqualTo(Day)
+      assertk.assert(durations[0].unit).isInstanceOf(Day::class)
       assertk.assert(durations[0].quantity).isEqualTo(2L)
-      assertk.assert(durations[1].unit).isEqualTo(Hour)
+      assertk.assert(durations[1].unit).isInstanceOf(Hour::class)
       assertk.assert(durations[1].quantity).isEqualTo(10L)
-      assertk.assert(durations[2].unit).isEqualTo(Minute)
+      assertk.assert(durations[2].unit).isInstanceOf(Minute::class)
       assertk.assert(durations[2].quantity).isEqualTo(4L)
-      assertk.assert(durations[3].unit).isEqualTo(Second)
-      assertk.assert(durations[3].quantity).isEqualTo(45L)
     }
   }
 
@@ -131,7 +130,7 @@ class PrettyTimeTest {
   fun testCalculatePreciseDuration2() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("40 minutes ago", prettyTime.formatUnrounded(prettyTime.calculatePreciseDuration(
         Date(Date().time - (40 * 60 * 1000).toLong() - (40 * 1000).toLong()))))
@@ -324,7 +323,6 @@ class PrettyTimeTest {
   }
 
   @Test
-
   fun testPreciseInThePast() {
     val t = PrettyTime()
     val durations = t.calculatePreciseDuration(Date(Date().time - 1000 * (10 * 60 + 5 * 60 * 60)))
@@ -334,7 +332,6 @@ class PrettyTimeTest {
   }
 
   @Test
-
   fun testFormattingDurationListInThePast() {
     val t = PrettyTime(Date((1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 15 + 1000 * 60 * 38).toLong()))
     val durations = t.calculatePreciseDuration(Date(0))
@@ -397,7 +394,7 @@ class PrettyTimeTest {
   fun testFormatList() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("41 minutes ago",
         prettyTime.format(prettyTime.calculatePreciseDuration(
@@ -409,7 +406,7 @@ class PrettyTimeTest {
   fun testFormatListUnrounded() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("40 minutes ago",
         prettyTime.formatUnrounded(prettyTime.calculatePreciseDuration(
@@ -421,7 +418,7 @@ class PrettyTimeTest {
   fun testFormatDurationList() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("41 minutes",
         prettyTime.formatDuration(prettyTime.calculatePreciseDuration(
@@ -433,7 +430,7 @@ class PrettyTimeTest {
   fun testFormatDurationListUnrounded() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("40 minutes",
         prettyTime.formatDurationUnrounded(prettyTime.calculatePreciseDuration(
@@ -444,7 +441,7 @@ class PrettyTimeTest {
   fun testCalculatePreciseDuration() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("41 minutes ago",
         prettyTime.format(prettyTime.calculatePreciseDuration(
@@ -455,16 +452,16 @@ class PrettyTimeTest {
   fun testCalculatePreciseDurationUnrounded() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("40 minutes ago",
         prettyTime.formatUnrounded(prettyTime.calculatePreciseDuration(
             Date(Date().time - (40 * 60 * 1000).toLong() - (40 * 1000).toLong()))))
   }
 
-  @After
-
-  fun tearDown() {
-    Locale.setDefault(locale!!)
+  companion object {
+    @BeforeClass @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }

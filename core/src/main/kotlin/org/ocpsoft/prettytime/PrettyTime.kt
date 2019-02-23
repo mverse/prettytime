@@ -84,6 +84,8 @@ data class PrettyTime(
       units = units,
       overrideResourceBundle = overrideResourceBundle)
 
+
+
   private var cachedUnitKeys: List<TimeUnit>? = null
   var reference: Instant
     get() = referenceFn()
@@ -116,6 +118,7 @@ data class PrettyTime(
     }
 
   init {
+    this.locale = defaultLocale
     initTimeUnits()
   }
 
@@ -443,18 +446,18 @@ data class PrettyTime(
   }
 
   private fun initTimeUnits() {
-    addUnit(JustNow)
-    addUnit(Millisecond)
-    addUnit(Second)
-    addUnit(Minute)
-    addUnit(Hour)
-    addUnit(Day)
-    addUnit(Week)
-    addUnit(Month)
-    addUnit(Year)
-    addUnit(Decade)
-    addUnit(Century)
-    addUnit(Millennium)
+    addUnit(JustNow())
+    addUnit(Millisecond())
+    addUnit(Second())
+    addUnit(Minute())
+    addUnit(Hour())
+    addUnit(Day())
+    addUnit(Week())
+    addUnit(Month())
+    addUnit(Year())
+    addUnit(Decade())
+    addUnit(Century())
+    addUnit(Millennium())
   }
 
   private fun addUnit(unit: ResourcesTimeUnit) {

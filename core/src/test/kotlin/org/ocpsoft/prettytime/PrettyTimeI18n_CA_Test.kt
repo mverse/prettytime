@@ -24,6 +24,7 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.ocpsoft.prettytime.format.SimpleTimeFormat
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.*
 
 class PrettyTimeI18n_CA_Test {
@@ -38,18 +39,9 @@ class PrettyTimeI18n_CA_Test {
   }
 
   @Test
-
-  fun testNullDate() {
-    val t = PrettyTime()
-    val date: Date? = null
-    assertEquals("en un instant", t.format(date))
-  }
-
-  @Test
-
   fun testRightNow() {
     val t = PrettyTime()
-    assertEquals("en un instant", t.format(Date()))
+    assertEquals("en un instant", t.format(Instant.now()))
   }
 
   @Test
@@ -260,16 +252,14 @@ class PrettyTimeI18n_CA_Test {
     assertEquals("vor 3 Jahrzehnten", t.format(Date(0)))
   }
 
-  var locale: Locale = Locale.getDefault()
-
   @Before
   fun setUp() {
-    locale = Locale.getDefault()
     Locale.setDefault(Locale("ca"))
   }
 
-  @After
-  fun tearDown() {
-    Locale.setDefault(locale)
+  companion object {
+    @BeforeClass @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }

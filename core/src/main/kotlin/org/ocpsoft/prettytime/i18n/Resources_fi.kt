@@ -12,13 +12,12 @@ import java.util.function.Consumer
 
 open class Resources_fi : ListResourceBundle(), TimeFormatProvider {
 
-  private val formatMap = ConcurrentHashMap<TimeUnit, TimeFormat>()
+  private val formatMap:MutableMap<TimeUnit, TimeFormat> = mutableMapOf()
 
   override fun getFormatFor(t: TimeUnit): TimeFormat? {
-    if (!formatMap.containsKey(t)) {
-      (formatMap as java.util.Map<TimeUnit, TimeFormat>).putIfAbsent(t, FiTimeFormat(this, t))
+    return formatMap.getOrPut(t) {
+      FiTimeFormat(this, t)
     }
-    return formatMap[t]
   }
 
   override fun getContents() = CONTENTS

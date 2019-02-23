@@ -1,6 +1,7 @@
 package org.ocpsoft.prettytime
 
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -32,22 +33,12 @@ class PrettyTimeI18n_EL_Test {
   }
 
   @Test
-
-  fun testNullDate() {
-    val t = PrettyTime()
-    val date: Date? = null
-    Assert.assertEquals("στιγμές από τώρα", t.format(date))
-  }
-
-  @Test
-
   fun testRightNow() {
     val t = PrettyTime()
     Assert.assertEquals("στιγμές από τώρα", t.format(Date()))
   }
 
   @Test
-
   fun testCalculatePreciceDuration() {
     val t = PrettyTime()
     val preciseDuration = t.calculatePreciseDuration(
@@ -61,7 +52,7 @@ class PrettyTimeI18n_EL_Test {
   fun testCalculatePreciseDuration2() {
     val prettyTime = PrettyTime()
     prettyTime.clearUnits()
-    val minutes = Minute
+    val minutes = Minute()
     prettyTime.registerUnit(minutes, ResourcesTimeFormat(minutes))
     Assert.assertEquals("40 λεπτά Πριν από", prettyTime.formatUnrounded(prettyTime.calculatePreciseDuration(
         Date(Date().time - (40 * 60 * 1000).toLong() - (40 * 1000).toLong()))))
@@ -221,5 +212,11 @@ class PrettyTimeI18n_EL_Test {
 
   fun tearDown() {
     Locale.setDefault(locale!!)
+  }
+
+  companion object {
+    @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }

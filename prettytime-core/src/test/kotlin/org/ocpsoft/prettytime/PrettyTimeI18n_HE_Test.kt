@@ -3,8 +3,10 @@
  */
 package org.ocpsoft.prettytime
 
+import org.junit.AfterClass
 import org.junit.Assert
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.ocpsoft.prettytime.format.SimpleTimeFormat
 import org.ocpsoft.prettytime.units.Minute
@@ -38,7 +40,7 @@ class PrettyTimeI18n_HE_Test {
 
   @Test
 
-  fun testCalculatePreciceDurationMillenia() {
+  fun testCalculatePreciseDurationMillenia() {
     val t = PrettyTime(Date(2014, 8, 15, 0, 0))
     val durations = t.calculatePreciseDuration(Date(0))
     Assert.assertEquals("לפני 1 מילניום 9 מאות 4 עשורים 4 שנים 8 חודשים 1 שבוע 6 ימים 20 שעות 5 דקות",
@@ -384,6 +386,12 @@ class PrettyTimeI18n_HE_Test {
     Assert.assertEquals("לפני 40 דקות",
         prettyTime.formatUnrounded(prettyTime.calculatePreciseDuration(
             Date(Date().time - (40 * 60 * 1000).toLong() - (40 * 1000).toLong()))))
+  }
+
+  companion object {
+    @BeforeClass @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }
 

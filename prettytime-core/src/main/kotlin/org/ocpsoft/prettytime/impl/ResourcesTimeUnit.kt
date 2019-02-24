@@ -48,8 +48,8 @@ abstract class ResourcesTimeUnit : TimeUnit {
       return false
     if (javaClass != other.javaClass)
       return false
-    val other = other as ResourcesTimeUnit?
-    if (maxQuantity != other!!.maxQuantity)
+    val o = other as ResourcesTimeUnit?
+    if (maxQuantity != o?.maxQuantity)
       return false
     return millisPerUnit == other.millisPerUnit
   }

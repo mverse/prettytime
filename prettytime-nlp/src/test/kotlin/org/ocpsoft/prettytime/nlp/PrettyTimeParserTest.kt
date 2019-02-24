@@ -20,7 +20,6 @@ class PrettyTimeParserTest {
   }
 
   @Test
-  @Ignore
   fun testParseAmbiguousTimes() {
     val parse = PrettyTimeParser().parseSyntax("let's get lunch at two")
     Assert.assertFalse(parse.isEmpty())
@@ -48,7 +47,7 @@ class PrettyTimeParserTest {
     val formatted = PrettyTime(reference = Instant.now(), locale = Locale.ENGLISH).format(parse[0].dates[0].toInstant())
     Assert.assertEquals("3 days ago", formatted)
     Assert.assertEquals(1, parse[0].line.toLong())
-    Assert.assertEquals(9, parse[0].position.toLong())
+    Assert.assertEquals(10, parse[0].position.toLong())
     Assert.assertEquals(1, parse[0].dates.size.toLong())
     Assert.assertNull(parse[0].recursUntil)
     Assert.assertFalse(parse[0].isRecurring)
@@ -56,14 +55,13 @@ class PrettyTimeParserTest {
   }
 
   @Test
-  @Ignore
   fun testParseSyntaxRecurring() {
     val parse = PrettyTimeParser().parseSyntax("I do it every three days")
     Assert.assertFalse(parse.isEmpty())
     val formatted = PrettyTime(defaultLocale = Locale.ENGLISH).format(parse[0].dates[0].toInstant())
     Assert.assertEquals("3 days from now", formatted)
     Assert.assertEquals(1, parse[0].line.toLong())
-    Assert.assertEquals(14, parse[0].position.toLong())
+    Assert.assertEquals(15, parse[0].position.toLong())
     Assert.assertEquals(1, parse[0].dates.size.toLong())
     Assert.assertNull(parse[0].recursUntil)
     Assert.assertTrue(parse[0].isRecurring)

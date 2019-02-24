@@ -23,7 +23,9 @@ import java.util.Date
 import java.util.Locale
 
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.ocpsoft.prettytime.format.SimpleTimeFormat
 
@@ -31,18 +33,17 @@ class PrettyTimeI18n_FA_Test {
   internal var format = SimpleDateFormat("MM/dd/yyyy")
 
   // Stores current locale so that it can be restored
-  private var locale: Locale? = null
+  private lateinit var locale: Locale
 
   // Method setUp() is called automatically before every test method
   @Before
 
   fun setUp() {
     locale = Locale("fa")
-    Locale.setDefault(locale!!)
+    Locale.setDefault(locale)
   }
 
   @Test
-
   fun testCeilingInterval() {
     val then = format.parse("5/20/2012")
     val ref = format.parse("6/17/2012")
@@ -268,10 +269,9 @@ class PrettyTimeI18n_FA_Test {
     assertEquals("3 دهه پیش", t.format(Date(0)))
   }
 
-  // Method tearDown() is called automatically after every test method
-  @After
-
-  fun tearDown() {
-    Locale.setDefault(locale!!)
+  companion object {
+    @BeforeClass @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
   }
 }

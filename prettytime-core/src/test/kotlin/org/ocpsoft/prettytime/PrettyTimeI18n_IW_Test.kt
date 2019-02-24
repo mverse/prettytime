@@ -395,4 +395,11 @@ class PrettyTimeI18n_IW_Test {
             Date(Date().time - (40 * 60 * 1000).toLong() - (40 * 1000).toLong()))))
   }
 
+
+  companion object {
+    @BeforeClass @AfterClass fun resetLocale() {
+      Locale.setDefault(Locale.ROOT)
+    }
+  }
+
 }

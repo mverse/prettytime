@@ -52,7 +52,7 @@ allprojects {
         entry("assertk-jvm")
         entry("assertk-common")
       }
-      dependency("com.joestelmach:natty:0.10.1") {
+      dependency("com.joestelmach:natty:0.11") {
         this.exclude("org.antlr:antlr")
       }
       dependency("io.mverse:hashkode:1.0.1")

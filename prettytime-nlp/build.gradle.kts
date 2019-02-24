@@ -10,5 +10,5 @@ mverse {
 }
 
 dependencies {
-  compile(project(":core"))
+  compile(project(":prettytime-core"))
 }

@@ -15,10 +15,6 @@
  */
 package org.ocpsoft.prettytime.i18n
 
-import java.util.ArrayList
-import java.util.Collections
-import java.util.ListResourceBundle
-import java.util.ResourceBundle
 import org.ocpsoft.prettytime.Duration
 import org.ocpsoft.prettytime.TimeFormat
 import org.ocpsoft.prettytime.TimeUnit
@@ -31,6 +27,7 @@ import org.ocpsoft.prettytime.units.Minute
 import org.ocpsoft.prettytime.units.Month
 import org.ocpsoft.prettytime.units.Week
 import org.ocpsoft.prettytime.units.Year
+import java.util.*
 
 class Resources_hr : ListResourceBundle(), TimeFormatProvider {
   companion object {
@@ -131,43 +128,37 @@ class Resources_hr : ListResourceBundle(), TimeFormatProvider {
   override fun getContents() = OBJECTS
 
   override fun getFormatFor(t: TimeUnit): TimeFormat? {
-    if (t is Minute) {
-      return HrTimeFormatBuilder("Minute").addNames("minutu", 1)
+    when (t) {
+      is Minute -> return HrTimeFormatBuilder("Minute").addNames("minutu", 1)
           .addNames("minute", 4).addNames("minuta", java.lang.Long.MAX_VALUE)
           .build(this)
-    } else if (t is Hour) {
-      return HrTimeFormatBuilder("Hour").addNames("sat", 1)
+      is Hour -> return HrTimeFormatBuilder("Hour").addNames("sat", 1)
           .addNames("sata", 4).addNames("sati", java.lang.Long.MAX_VALUE)
           .build(this)
-    } else if (t is Day) {
-      return HrTimeFormatBuilder("Day").addNames("dan", 1)
+      is Day -> return HrTimeFormatBuilder("Day").addNames("dan", 1)
           .addNames("dana", 4).addNames("dana", java.lang.Long.MAX_VALUE)
           .build(this)
-    } else if (t is Week) {
-      return HrTimeFormatBuilder("Week").addNames("tjedan", 1)
+      is Week -> return HrTimeFormatBuilder("Week").addNames("tjedan", 1)
           .addNames("tjedna", 4).addNames("tjedana", java.lang.Long.MAX_VALUE)
           .build(this)
-    } else if (t is Month) {
-      return HrTimeFormatBuilder("Month").addNames("mjesec", 1)
+      is Month -> return HrTimeFormatBuilder("Month").addNames("mjesec", 1)
           .addNames("mjeseca", 4).addNames("mjeseci", java.lang.Long.MAX_VALUE)
           .build(this)
-    } else if (t is Year) {
-      return HrTimeFormatBuilder("Year").addNames("godinu", 1)
+      is Year -> return HrTimeFormatBuilder("Year").addNames("godinu", 1)
           .addNames("godine", 4).addNames("godina", java.lang.Long.MAX_VALUE)
           .build(this)
-    } else if (t is Millennium) {
-      return HrTimeFormatBuilder("Millennium")
+      is Millennium -> return HrTimeFormatBuilder("Millennium")
           .addNames("tisućljeće", 1).addNames("tisućljeća", java.lang.Long.MAX_VALUE)
           .build(this)
+      // Don't override format for other time units
+      else -> return null
     }
-    // Don't override format for other time units
-    return null
   }
 
   private class HrName(val isFuture: Boolean, private val value: String, private val threshold: Long?) : Comparable<HrName> {
 
-    override fun compareTo(o: HrName): Int {
-      return threshold!!.compareTo(o.getThreshold())
+    override fun compareTo(other: HrName): Int {
+      return threshold!!.compareTo(other.getThreshold())
     }
 
     fun get(): String {
@@ -221,8 +212,8 @@ class Resources_hr : ListResourceBundle(), TimeFormatProvider {
           pastNames.add(name)
         }
       }
-      Collections.sort(futureNames)
-      Collections.sort(pastNames)
+      futureNames.sort()
+      pastNames.sort()
     }
 
     override fun getGramaticallyCorrectName(d: Duration, round: Boolean): String {
@@ -244,7 +235,7 @@ class Resources_hr : ListResourceBundle(), TimeFormatProvider {
 
   private class HrTimeFormatBuilder internal constructor(private val resourceKeyPrefix: String) {
 
-    private val names = ArrayList<Resources_hr.HrName>()
+    private val names = mutableListOf<HrName>()
 
     internal fun addNames(name: String, limit: Long): HrTimeFormatBuilder {
       return addName(true, name, limit).addName(false, name, limit)
@@ -258,7 +249,7 @@ class Resources_hr : ListResourceBundle(), TimeFormatProvider {
       if (name == null) {
         throw IllegalArgumentException()
       }
-      names.add(HrName(isFuture, name, limit))
+      names += HrName(isFuture, name, limit)
       return this
     }
   }

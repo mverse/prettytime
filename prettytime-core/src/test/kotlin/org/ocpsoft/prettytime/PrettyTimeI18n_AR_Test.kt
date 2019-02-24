@@ -23,6 +23,7 @@ import org.junit.Before
 import org.junit.Test
 import org.ocpsoft.prettytime.format.SimpleTimeFormat
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.*
 
 class PrettyTimeI18n_AR_Test {
@@ -50,8 +51,9 @@ class PrettyTimeI18n_AR_Test {
 
   @Test
   fun testRightNow() {
-    val t = PrettyTime()
-    assertEquals("بعد لحظات", t.format(Date()))
+    val now = Instant.now()
+    val t = PrettyTime(now)
+    assertEquals("بعد لحظات", t.format(now))
   }
 
   @Test
@@ -62,8 +64,9 @@ class PrettyTimeI18n_AR_Test {
 
   @Test
   fun testPrettyTimeDefault() {
-    val p = PrettyTime(locale)
-    assertEquals(p.format(Date()), "بعد لحظات")
+    val now = Instant.now()
+    val p = PrettyTime(now, locale)
+    assertEquals(p.format(now), "بعد لحظات")
   }
 
   @Test

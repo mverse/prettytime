@@ -13,7 +13,7 @@ plugins {
 allprojects {
   plugins.apply("java")
   group = "io.mverse"
-  tasks.withType(Javadoc::class) { enabled = false }
+  tasks.withType(Javadoc::class) { isEnabled = false }
   mverse {
     isDefaultDependencies = false
     dependencies {

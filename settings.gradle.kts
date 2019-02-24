@@ -3,8 +3,8 @@ import org.gradle.kotlin.dsl.repositories
 
 rootProject.name = "prettytime"
 
-include("nlp")
-include("core")
+include("prettytime-nlp")
+include("prettytime-core")
 
 pluginManagement {
   repositories {
